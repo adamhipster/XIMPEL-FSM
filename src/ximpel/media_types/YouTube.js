@@ -33,6 +33,7 @@
 ximpel.mediaTypeDefinitions.YouTube = function( customElements, customAttributes, $parentElement, player, model ){
 	// The custom elements that were added inside the <youtube> tag in the playlist.
 	this.customElements = customElements; // not used right now.
+	console.log('%c YouTube Constructor', 'font-size: 40px; color:#dd0000');
 
 	// The custom attributes that were added to the <youtube> tag in the playlist.
 	this.customAttributes = customAttributes;
@@ -44,64 +45,6 @@ ximpel.mediaTypeDefinitions.YouTube = function( customElements, customAttributes
 	this.player = player;
 	var sqModel = new ximpel.SequenceModel();
 	this.model = model;
-	// sqModel.add(model);
-	// this.player.subjectModels["lesson2"].sequenceModel.list[0].add(sqModel);
-	var traverse = function(model, path){
-		path.push(model);
-		if(model instanceof ximpel.MediaModel){
-			for (var i = 0; i < model.overlays.length; i++) {
-				var overlay = model.overlays[i];
-				for (var j = 0; j < overlay.leadsToList.length; j++) {
-					var leadsTo = overlay.leadsToList[j];
-					if(customAttributes.stopAtSubjectId === leadsTo.subject){
-						insertModel(path.slice());
-						return;
-					}
-				}
-			}
-			return;
-		}
-		for (var k = 0; k < model.list.length; k++) {
-			// console.log(model, k);
-			// console.log(path);
-			traverse(model.list[k], path.slice());
-		}
-	}.bind(this);
-
-	var insertModel = function(path){
-		var subjectId = path[0].subjectId;
-		var sequenceModel = this.player.subjectModels[subjectId].sequenceModel;
-
-		var traverse = function(sequenceModel){
-			for (var i = 0; i < sequenceModel.list.length; i++) {
-				var model = sequenceModel.list[i];
-				if(model instanceof ximpel.ParallelModel){
-					// console.log('addModel');
-					// console.log(path);
-					// console.log(model);
-					// console.log(this.model);
-					var sqModel = new ximpel.SequenceModel();
-					sqModel.add(this.model); //create SequenceModel
-					model.add(sqModel);					//insert in Parallel Model
-					return;
-				} else {
-					traverse(model.list[i]);
-				}
-			}
-			return;
-		}.bind(this);
-
-		traverse(sequenceModel);
-	}.bind(this);
-
-	for (var key in this.player.subjectModels) {
-		var sequenceModel = this.player.subjectModels[key].sequenceModel;
-		traverse(sequenceModel, [this.player.subjectModels[key]]);
-	}
-
-	console.log('this.player');
-	console.log(this.player);
-
 
 	// The youtube video id (can be found in the URL of a youtube video).
 	this.videoId = customAttributes.id;
@@ -195,6 +138,11 @@ ximpel.mediaTypeDefinitions.YouTube.prototype.mediaPlay = function(){
 	readyToPlayDeferred.done( function(){
 		// start playing the youtube player.
 		this.playYoutube();
+
+		this.addSubjectSwitchSurvivor();
+
+		console.log('this.player', this.player);
+
 	}.bind(this) );
 
 	// Check the state of youtube API script (ie. if its loaded yet or not)
@@ -214,7 +162,78 @@ ximpel.mediaTypeDefinitions.YouTube.prototype.mediaPlay = function(){
 	}
 }
 
+ximpel.mediaTypeDefinitions.YouTube.prototype.addSubjectSwitchSurvivor = function(){
+	// Add media item subject switch survivor
+	// The traverse function determines where to put event listeners for the media item that survives a subject switch
+	var traverse = function(model, path, modelListLength){
+		path.push(model);
+		if(model instanceof ximpel.MediaModel){
+			console.log(model.customAttributes.id, this.model.customAttributes, 'this.player', this.player.firstSubjectModel, 'path', path[0]);
+			if(model.customAttributes.id === this.model.customAttributes.id 
+				|| this.player.currentSubjectModel.subjectId === path[0].subjectId
+			) {
+				return; //otherwise we are going to duplicate a lot of things and get bugs.
+			}
+			for (var i = 0; i < model.overlays.length; i++) {
+				var overlay = model.overlays[i];
+				for (var j = 0; j < overlay.leadsToList.length; j++) {
+					var leadsTo = overlay.leadsToList[j];
+					if(this.customAttributes.stopAtSubjectId === leadsTo.subject && this.customAttributes.stopAtSubjectId !== path[0].subjectId){
+						console.log('leadsTo.subject', leadsTo.subject);
+						console.log('traverse model', model);
+						insertModel(path.slice());
+						return;
+					}
+				}
+			}
+			return;
+		}
+		for (var k = 0; k < modelListLength; k++) {
+			// console.log('1st for-loop', model, k);
+			// console.log(path);
+			traverse(model.list[k], path.slice());
+		}
+	}.bind(this);
 
+	var insertModel = function(path){
+		var subjectId = path[0].subjectId;
+		var sequenceOrParallelModel = this.player.subjectModels[key].sequenceModel || this.player.subjectModels[key].parallelModel;
+
+		console.log('%c insertModel', 'color: #ff0000', path);
+
+		var traverse = function(sequenceOrParallelModel, modelListLength){
+			for (var i = 0; i < modelListLength; i++) {
+				if(sequenceOrParallelModel instanceof ximpel.ParallelModel){
+					console.log('addModel', modelListLength);
+					console.log('%c' + path[0].subjectId, 'color: #dd5500', path);
+					console.log(sequenceOrParallelModel);
+					console.log(this.model, this.model.customAttributes.id);
+					var sqModel = new ximpel.SequenceModel(); //wrapping them in a sequence player to make them more recognizable for debugging purposes
+					sqModel.isGlobal = true; //need to know this in order to dynamically delete stuff, making them truly recognizable
+					sqModel.add(this.model); //create SequenceModel			
+					sequenceOrParallelModel.add(sqModel);				//insert in Parallel Model
+					return;
+				} else {
+					traverse(sequenceOrParallelModel.list[i]);
+				}
+			}
+			return;
+		}.bind(this);
+
+		var modelListLength = sequenceOrParallelModel.list.length;
+		traverse(sequenceOrParallelModel, modelListLength);
+	}.bind(this);
+
+	//this is where the first calls start
+	for (var key in this.player.subjectModels) {
+		var model = this.player.subjectModels[key].sequenceModel || this.player.subjectModels[key].parallelModel;
+		if(model){
+			var modelListLength = model.list.length;
+			var path = [this.player.subjectModels[key]];
+			traverse(model, path, modelListLength);
+		}
+	}
+}
 
 // The resumePlayback() method resumes playback from a paused state.
 ximpel.mediaTypeDefinitions.YouTube.prototype.resumePlayback = function(){
@@ -460,16 +479,25 @@ ximpel.mediaTypeDefinitions.YouTube.prototype.mediaPause = function(){
 // The stop method stops the video entirely without being able to resume later on. After this method the video playback pointer
 // has been reset to its start position and the youtube i frame element is detached from the DOM, so nothing is visible anymore.
 ximpel.mediaTypeDefinitions.YouTube.prototype.mediaStop = function(){
+	console.log('%cmedia stop', 'color: green');
 	console.log(this);
 	if( this.state === this.STATE_STOPPED ){
 		return;
 	}
+	
 	var csm = this.player.currentSubjectModel;
+	
 	if( csm.subjectId  !== this.customAttributes.stopAtSubjectId && this.customAttributes.stopAtSubjectId !== undefined) {
+		console.log('remove', csm.subjectId, this.customAttributes.stopAtSubjectId);
+		console.log('media model', this.model);
+		console.log('this.player.currentSubjectModel', this.player.currentSubjectModel);
 		// this.state = this.STATE_PLAYING;
-		// console.log(this.mediaModel);
 		// this.onEnd(this.player.sequencePlayer.mediaPlayer.handlePlaybackEnd.bind(this));
 		return;
+	}
+	else {
+		//remove all the globals in the playlist that have to do anything with this
+		this.removeSubjectSwitchSurvivor();
 	}
 	this.state = this.STATE_STOPPED;
 	this.youtubePlayer.pauseVideo();
@@ -482,6 +510,43 @@ ximpel.mediaTypeDefinitions.YouTube.prototype.mediaStop = function(){
 	this.readyToPlayPromise = null;
 }
 
+ximpel.mediaTypeDefinitions.YouTube.prototype.removeSubjectSwitchSurvivor = function(){
+	// The traverse function determines where to put event listeners for the media item that survives a subject switch
+	var traverse = function(model, path, modelListLength){
+		path.push(model);
+		if(model === undefined){
+			return;
+		}
+		if(model.list === undefined){
+			return;
+		}
+		if(model.isGlobal === true
+			&& model.list[0].customAttributes.id === this.model.customAttributes.id //id of traversed playlist needs to match with what the player currently is looking to delete.
+		){
+			var parentModel = path[path.length-2];
+			var index = parentModel.list.indexOf(model);
+			if(index !== -1){
+				parentModel.list.splice(index, 1); //remove the item
+			}
+			return;
+		}
+		for (var k = 0; k < modelListLength; k++) {
+			traverse(model.list[k], path.slice());
+		}
+	}.bind(this);
+
+	//this is where the first calls start
+	for (var key in this.player.subjectModels) {
+		var model = this.player.subjectModels[key].sequenceModel || this.player.subjectModels[key].parallelModel;
+		if(model && model !== undefined){
+			// console.log('remove MISSS', model, key);
+			var modelListLength = model.list.length;
+			var path = [this.player.subjectModels[key]];
+			traverse(model, path, modelListLength);
+		}
+	}
+	// console.log('removeSubjectSwitchSurvivor', this.player.playlistModel);
+}
 
 
 // Every media item can implement a getPlayTime() method. If the media type implements this method then 

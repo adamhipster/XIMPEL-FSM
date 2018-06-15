@@ -1,0 +1,270 @@
+<ximpel>
+<playlist>
+<!-- Technological artefact: q0 is meant to initialize the stack -->
+<!-- It switches q1 when the user clicks on the overlay -->
+  <subject id="init">
+    <media>
+      <message text="init state" y="200px">
+        <overlay leadsTo="tape_input"   width="400px" height="400px" x="780px" y="380px">
+          <score id="stack1" operation="set" value="1" />
+          <score id="stack2" operation="set" value="1" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="tape_input">
+    <parallel>
+      <textblock text="Input for stack 1." width="200px" height="100px" x="880px" y="480px" color="#000" fontsize='50px' fontcolor="#fff" />
+      <textblock text="Input for stack 2." width="200px" height="100px" x="880px" y="780px" color="#000" fontsize='50px' fontcolor="#fff" />
+      <message text="Set the tape up here">
+
+        <overlay text="0" leadsTo="tape_input"   width="100px" height="100px" x="480px" y="580px">
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+        <overlay text="1" leadsTo="tape_input"   width="100px" height="100px" x="1340px" y="580px">
+          <score id="stack1" operation="multiply" value="2" /> <!-- begin push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- end push 1 -->
+        </overlay>
+
+        <overlay text="0" leadsTo="tape_input"   width="100px" height="100px" x="480px" y="880px">
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+        <overlay text="1" leadsTo="tape_input"   width="100px" height="100px" x="1340px" y="880px">
+          <score id="stack2" operation="multiply" value="2" /> <!-- begin push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- end push 1 -->
+        </overlay>
+
+        <overlay text="Start" leadsTo="s0"   width="200px" height="150px" x="1580px" y="480px" />
+
+        <overlay text="Default Init" leadsTo="s0"   width="200px" height="150px" x="1580px" y="780px">
+          <score id="stack1" operation="set" value="4096" />
+          <score id="stack2" operation="set" value="8206" />
+        </overlay>
+
+        <overlay text="Debug button!" leadsTo="s2"   width="450px" height="150px" x="1580px" y="180px">
+            <score id="stack1" operation="set" value="131074" /> <!-- debug first comeback -->
+            <score id="stack2" operation="set" value="259" /> <!-- debug first comeback -->
+        </overlay>
+
+      </message>
+    </parallel>
+  </subject>
+
+<!-- 0011100 -->
+
+  <!-- Assumption: start at 0 before first 1  -->
+  <subject id="s0">
+    <media>
+      <message text="s0">
+
+        <!-- s0: read 0, write 0, move right, s0 -->
+        <overlay text="0" leadsTo="s0"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+
+        <!-- s0: read 1, write 0, move right, s1 -->
+        <overlay text="1" leadsTo="s1"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="s1">
+    <media>
+      <message text="s1">
+
+        <!-- s1: read 0, write 0, move right, s1b -->
+        <overlay text="0" leadsTo="s2"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+
+        <!-- s1: read 1, write 1, move right, s1 -->
+        <overlay text="1" leadsTo="s1"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+
+  <subject id="s2">
+    <media>
+      <message text="s2">
+
+        <!-- s2: read 0, write 1, move right, s3 -->
+        <overlay text="0" leadsTo="s3"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+
+        <!-- s2: read 1, write 1, move right, s2 -->
+        <overlay text="1" leadsTo="s2"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="s3">
+    <media>
+      <message text="s3">
+
+        <!-- s3: read 0, write 1, move right, s4 -->
+        <overlay text="0" leadsTo="s4"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+
+        <!-- s3: read 1, DOES NOTHING -->
+        <overlay text="1" leadsTo="nothing"   width="100px" height="100px" x="1340px" y="480px">
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+
+
+<subject id="s4">
+  <media>
+    <message text="s4">
+
+      <!-- read 0, pop stack 1, push 1 on stack 2 -->
+      <overlay text="0" leadsTo="s4"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- / push 1 -->
+      </overlay>
+
+      <!-- read 1, pop stack 1, push 1 on stack 2 -->
+      <overlay text="1" leadsTo="s5"   width="100px" height="100px" x="1340px" y="480px">
+        <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+        <score id="stack2" operation="multiply" value="2" /> <!-- . push 1 -->
+        <score id="stack2" operation="add" value="1" /> <!-- / push 1 -->
+      </overlay>
+
+    </message>
+  </media>
+</subject>
+
+<subject id="s5">
+  <media>
+    <message text="s5">
+      <!-- read 1, pop stack 1, push 0 or 1 on stack 2 -->
+      <overlay text="1 pop 0" leadsTo="s6"   width="250px" height="100px" x="1340px" y="480px">
+        <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+        <score id="stack2" operation="multiply" value="2" /> <!-- . push 0 -->
+      </overlay>
+      <overlay text="1 pop 1" leadsTo="s6"   width="250px" height="100px" x="1340px" y="680px">
+        <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+        <score id="stack2" operation="multiply" value="2" /> <!-- . push 1 -->
+        <score id="stack2" operation="add" value="1" /> <!-- . push 1 -->
+      </overlay>
+
+      <!-- s6 read 0, write 0, move left, s7 -->
+        <overlay text="0 pop 1" leadsTo="s5"   width="250px" height="100px" x="910px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- push 1 -->
+        </overlay>
+
+        <overlay text="0 pop 0" leadsTo="s5"   width="250px" height="100px" x="910px" y="680px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+    </message>
+  </media>
+</subject>
+
+<!-- <subject id="s6">
+  <media>
+    <message text="s6">
+        
+    </message>
+  </media>
+</subject> -->
+
+<subject id="s6">
+  <media>
+    <message text="s6">
+        <!-- s6 read 0, write 0, move left, s7 -->
+        <overlay text="0" leadsTo="s7"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- push 1 -->
+        </overlay>
+
+        <!-- s7: read 1, write 1, move left, s7 -->
+        <overlay text="1" leadsTo="s7"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+    </message>
+  </media>
+</subject>
+
+<subject id="s7">
+  <media>
+    <message text="s7">
+        <!-- s7: read 0, write 0, move right, s0 -->
+        <overlay text="0 pop 0" leadsTo="s0"   width="250px" height="100px" x="910px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+
+        <overlay text="0 pop 1" leadsTo="s0"   width="250px" height="100px" x="910px" y="680px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+
+        <!-- s7: read 1, write 1, move left, s7 -->
+        <overlay text="1 pop 1" leadsTo="s7"   width="250px" height="100px" x="1340px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- . push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- / push 1 -->
+        </overlay>
+
+        <!-- s7: read 1, write 1, move left, s7 -->
+        <overlay text="1 pop 0" leadsTo="s7"   width="250px" height="100px" x="1340px" y="680px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- . push 0 -->
+        </overlay>
+    </message>
+  </media>
+</subject>
+
+<subject id="s8">
+  <media>
+    <message text="s8">
+        <!-- s7: read 0, write 0, move right, s0 -->
+        <overlay text="0" leadsTo="accept"   width="250px" height="100px" x="910px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+    </message>
+  </media>
+</subject>
+
+  <subject id="accept">
+    <media>
+      <message text="Program is done. The input should now be doubled!">
+      </message>
+    </media>
+  </subject>
+
+
+</playlist>
+</ximpel>
+

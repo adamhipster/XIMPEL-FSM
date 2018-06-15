@@ -1,0 +1,43 @@
+<ximpel> <!-- input alphabet: 0 and 1 -->
+<playlist>
+  <subject id="q1">
+    <media>
+      <message text="q1 - accept">
+        <overlay text="0" leadsTo="q2"   width="100px" height="100px" x="480px" y="480px"/>
+        <overlay text="1" leadsTo="q3"   width="100px" height="100px" x="1340px" y="480px"/>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="q2">
+    <media>
+      <message text="q2">
+        <overlay text="0" leadsTo="q1"   width="100px" height="100px" x="480px" y="480px"/>
+        <overlay text="1" leadsTo="q2"   width="100px" height="100px" x="1340px" y="480px"/>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="q3">
+    <media>
+      <message text="q3">
+        <overlay text="0" leadsTo="q2"   width="100px" height="100px" x="480px" y="480px"/>
+        <overlay text="1" leadsTo="q1"   width="100px" height="100px" x="1340px" y="480px"/>
+      </message>
+    </media>
+  </subject>
+
+</playlist>
+</ximpel>
+
+<!--    ⋅→→→→→→→→→→1→→→→→→→→⋅                               -->
+<!--    ↑                   ↓                                  -->
+<!--    ↑         ⋅←←0←←⋅   ↓                                  -->
+<!--    *         ↓     ↑   ↓                                  -->
+<!--   |q1|*→→→0→→→q2←⋅   ⋅←*q3                              -->
+<!--   ↑ ↑       ** ↑      *                                   -->
+<!--   ↑ ↑       ↓↓ ↑      ↓                                   -->
+<!--   ↑ ⋅←←←0←←←⋅↓ ↑      ↓                                     -->
+<!--   ↑          ⋅1⋅      ↓                                    -->
+<!--   ↑                   ↓                                 -->
+<!--   ⋅←←←←←←←←←←1←←←←←←←←⋅                                 -->

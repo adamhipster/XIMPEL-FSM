@@ -61,24 +61,48 @@
 
 					<h4>playlist.xml</h4>
 					<pre class="brush: html;">
-						&lt;ximpel&gt;
-						&lt;playlist&gt;
-					    &lt;subject id="subject1"&gt;
-					        &lt;media&gt;
-					        	&lt;youtube id="4_UVnsG7COM" /&gt;
-					        	&lt;youtube id="Tx7cXz_gSeI" /&gt;
-					            &lt;video&gt;
-					            	&lt;source file=&quot;myvideo&quot; extensions=&quot;mp4&quot;  /&gt;
-					            &lt;/video&gt;
-					        &lt;/media&gt;
-					    &lt;/subject&gt;
-						&lt;/playlist&gt;
-						&lt;/ximpel&gt;</pre>
+					&lt;ximpel&gt;
+					&lt;playlist&gt;
+					&lt;subject id="subject1"&gt;
+						&lt;media&gt;
+							&lt;youtube id="4_UVnsG7COM" /&gt;
+							&lt;youtube id="Tx7cXz_gSeI" /&gt;
+							&lt;video&gt;
+								&lt;source file=&quot;myvideo&quot; extensions=&quot;mp4&quot;  /&gt;
+							&lt;/video&gt;
+						&lt;/media&gt;
+					&lt;/subject&gt;
+					&lt;/playlist&gt;
+					&lt;/ximpel&gt;</pre>
 					<p>
 						This example will play a youtube video, then another youtube video and then a local video.
 					</p>
 					<br />
 
+
+
+
+					<h3>Playing media items in parallel</h3>
+					<p>
+						Multiple media items can be played at the same time, in parallel by listing them between the <code>&lt;parallel&gt;</code> and <code>&lt;/parallel&gt;</code> tags.
+					</p>
+
+					<h4>playlist_parallel.xml</h4>
+					<pre class="brush: html;">
+					&lt;ximpel&gt;
+					&lt;playlist&gt;
+					&lt;subject&gt;
+						&lt;parallel&gt;
+							&lt;youtube id="AI0RTvlm0hw" width="800px" height="960px" y="0px" x="100px" /&gt;
+							&lt;youtube id="4_UVnsG7COM" width="800px" height="960px" y="0px" x="1050px" /&gt;
+						&lt;/parallel&gt;
+					&lt;/subject&gt;
+					&lt;/playlist&gt;
+					&lt;/ximpel&gt;</pre>
+					<p>
+						This example will play the following media items at the same time: a youtube video and another youtube video alongside next to each other in the center of the screen.
+					</p>
+					<br />
 
 
 
@@ -109,11 +133,73 @@
 
 
 
+					<h3 id="parallel_complex_example">A more complicated example</h3>
+					<p>
+						The <code>&lt;media&gt;</code> and <code>&lt;/media&gt;</code> tags are synonymous for the <code>&lt;sequence&gt;</code> and <code>&lt;/sequence&gt;</code> tags. Furthermore, <code>sequence</code> and <code>parallel</code> tags can be nested, like so:
+					</p>
+					<pre class="brush: html;">
+						&lt;ximpel&gt;
+						&lt;playlist&gt;
+						&lt;subject&gt;
+							&lt;sequence&gt;
+								&lt;filler duration="5"&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="-100px" text="Introduction to the" /&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="parallel player" /&gt;
+								&lt;/filler&gt;
+								&lt;filler duration="5"&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="-100px" text="Credits for" /&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="this mashup go to" /&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="100px" text="Alessandro Grespan" /&gt;
+								&lt;/filler&gt;
+								&lt;filler duration="5"&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="-100px" text="Credits for the" /&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="chess video go to" /&gt;
+									&lt;overlay alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="100px" text="Mato Jelic" /&gt;
+								&lt;/filler&gt;
+								&lt;filler duration="1" /&gt; &lt;!-- need to stop the filler/overlays. Remove this line and the previous filler will stay (we are working on it). --&gt;
+								&lt;parallel&gt;
+									&lt;sequence&gt;
+										&lt;filler duration="10" /&gt;
+										&lt;youtube id="fc8HYztA_nc" width="800px" height="960px" y="0px" x="100px" /&gt;
+									&lt;/sequence&gt;
+									&lt;youtube id="-eohHwsplvY" width="800px" height="960px" y="0px" x="100px" /&gt;
+									&lt;sequence&gt;
+										&lt;filler duration="33" /&gt;
+										&lt;youtube id="3io0Ttj74Ro" width="800px" height="960px" y="0px" x="1050px" /&gt;
+										&lt;youtube id="3io0Ttj74Ro" width="800px" height="960px" y="0px" x="1050px" duration="50" /&gt;
+										&lt;filler duration="65" /&gt;
+										&lt;youtube id="3io0Ttj74Ro" width="800px" height="960px" y="0px" x="1050px" duration="27" /&gt;
+									&lt;/sequence&gt;
+								&lt;/parallel&gt;
+							&lt;/sequence&gt;
+						&lt;/subject&gt;
+						&lt;/playlist&gt;
+						&lt;/ximpel&gt;
+					</pre>
 
-
+					<p>This code gives a short introduction what it is about. It emulates a popular mashup from YouTube made by Allessandro Grespan. The XIMPEL developers also added a chess video to it made by Mato Jelic.</p>
 					
+					<p>The <code>parallel</code> and <code>sequence</code> tag can be alternated back and forth like so: </p>
 					
+					<pre class="brush: html;">
+						&lt;ximpel&gt;
+						&lt;playlist&gt;
+						&lt;subject&gt;
+							&lt;sequence&gt;
+								&lt;parallel&gt;
+									&lt;sequence&gt;
+										&lt;parallel&gt;
+											...
+										&lt;/parallel&gt;
+									&lt;/sequence&gt;
+								&lt;/parallel&gt;
+							&lt;/sequence&gt;
+						&lt;/subject&gt;
+						&lt;/playlist&gt;
+						&lt;/ximpel&gt;
+					</pre>
 					
+					<p>It is probably not needed to do this and in almost all cases using one top level <code>parallel</code> tag is enough.</p>
 
 				</div>
 			</div>

@@ -1,0 +1,52 @@
+//0011100
+   ^
+//S0 goes to the right, until it picks off a one. It switches to S1
+
+S0: READ 0, WRITE 0, RIGHT, S0
+S0: READ 1, WRITE 0, RIGHT, S1
+
+
+
+//S1 goes to the right and when it sees a 0, then it is on the right side, like so: 
+//0011100
+       ^
+therefore switches to S2.
+
+S1: READ 0, WRITE 0, RIGHT, S2
+S1: READ 1, WRITE 1, RIGHT, S1
+
+
+
+//S2 first write when it sees a 1, otherwise it just finds the first 0 after a sea of 1's
+
+S2: READ 0, WRITE 1, RIGHT, S3
+S2: READ 1, WRITE 1, RIGHT, S2
+
+
+
+//S3 second write when it sees a 1, the same like S3. No 1 can be encountered
+
+S3: READ 0, WRITE 1, RIGHT, S4
+S3: READ 1, -
+
+
+
+//S4 is the turning point where you need to go back
+
+S4: READ 0, WRITE 1, LEFT, S4
+S4: READ 1, WRITE 1, LEFT, S5
+
+//S5 reads 1's, until it finds a 0, which is the 'gap'
+
+S5: READ 0, WRITE POP, LEFT, S5
+S5: READ 1, WRITE POP, LEFT, S6
+
+//S6 is to check if the program is in an accepting state, otherwise continue to make preparations to go to state 0
+
+S6: READ 0, -, ACCEPT
+S6: READ 1, WRITE POP, LEFT, S7
+
+
+//if S7 finds the left zeroed out tail move to S0. Otherwise keep looking
+S7: READ 0, WRITE POP, RIGHT, S0
+S7: READ 1, WRITE POP, LEFT, S7

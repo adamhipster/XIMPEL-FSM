@@ -1,0 +1,135 @@
+<ximpel>
+<playlist>
+
+<subject id="nothing">
+  <parallel>
+    <filler>
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </filler>
+  </parallel>
+</subject>
+
+<subject id="add_acapella_kygo">
+  <parallel>
+    <audio>
+      <overlay width="200px" height="200px" y="0px" x="650px" backgroundColor="#551a8b" />
+      <source file="../assets/kygo" extensions="mp3" types="audio/mp3,audio/ogg" />
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </audio>
+  </parallel>
+</subject>
+
+<subject id="remove_acapella_kygo">
+  <parallel>
+    <filler>
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </filler>
+  </parallel>
+</subject>
+
+<subject id="add_acapella_maroon">
+  <parallel>
+    <youtube id="PkWPdBpTSiI" width="200px" height="200px" y="0px" x="50px" stopAtSubjectId="remove_acapella_maroon" />
+    <filler>
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </filler>
+  </parallel>
+</subject>
+
+<subject id="remove_acapella_maroon">
+  <parallel>
+    <filler>
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </filler>
+  </parallel>
+</subject>
+
+<subject id="add_instrumental">
+  <parallel>
+    <youtube id="U2HSam9whDI" width="200px" height="200px" y="0px" x="350px" stopAtSubjectId="remove_instrumental" />
+    <filler>
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </filler>
+  </parallel>
+</subject>
+
+<subject id="remove_instrumental">
+  <parallel>
+    <filler>
+      <overlay leadsTo="add_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="200px" text="Add Kygo"/>
+      <overlay leadsTo="remove_acapella_kygo" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="200px" text="Remove Kygo"/>
+      <overlay leadsTo="add_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="450px" text="Add Maroon"/>
+      <overlay leadsTo="remove_acapella_maroon" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="1060px" y="450px" text="Remove Maroon"/>
+      <overlay leadsTo="add_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="5em" width="760px" height="200px" x="100px" y="700px" text="Add Instrumental"/>
+      <overlay leadsTo="remove_instrumental" alpha="0.5" hoverAlpha="0.75" textColor="#fff" backgroundColor="#aaa" fontSize="4.5em" width="760px" height="200px" x="1060px" y="700px" text="Remove Instrumental"/>
+    </filler>
+  </parallel>
+</subject>
+
+</playlist>
+</ximpel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<ximpel>
+<playlist>
+<subject>
+    <parallel>
+        <sequence>
+          <youtube id="fXG56PwnGpA" width="800px" height="960px" y="0px" x="100px" />
+          <youtube id="fc8HYztA_nc" width="800px" height="960px" y="0px" x="100px" />
+          <youtube id="vFnY77FmSeU" width="800px" height="960px" y="0px" x="100px" />
+        </sequence>
+        <sequence>
+          <filler duration="10" />
+          <youtube id="e52IMaE-3As" width="800px" height="960px" y="0px" x="1050px" />
+          <youtube id="fz4MzJTeL0c" width="800px" height="960px" y="0px" x="1050px" />
+          <youtube id="6Dakd7EIgBE" width="800px" height="960px" y="0px" x="1050px" />
+          <youtube id="aE2GCa-_nyU" width="800px" height="960px" y="0px" x="1050px" />
+          <youtube id="N-YuSKeFMxY" width="800px" height="960px" y="0px" x="1050px" />
+        </sequence>
+    </parallel>
+</subject>
+</playlist>
+</ximpel> -->

@@ -1,0 +1,84 @@
+<ximpel>
+<playlist>
+<!-- Technological artefact: q0 is meant to initialize the stack -->
+<!-- It switches q1 when the user clicks on the overlay -->
+  <subject id="init">
+    <media>
+      <message text="init state" y="200px">
+        <overlay leadsTo="tape_input"   width="400px" height="400px" x="780px" y="380px">
+          <score id="stack1" operation="set" value="1" />
+          <score id="stack2" operation="set" value="1" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="tape_input">
+    <parallel>
+      <textblock text="Input for stack 1." width="200px" height="100px" x="880px" y="480px" color="#000" fontsize='50px' fontcolor="#fff" />
+      <textblock text="Input for stack 2." width="200px" height="100px" x="880px" y="780px" color="#000" fontsize='50px' fontcolor="#fff" />
+      <message text="Set the tape up here">
+
+        <overlay text="0" leadsTo="tape_input"   width="100px" height="100px" x="480px" y="580px">
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+        <overlay text="1" leadsTo="tape_input"   width="100px" height="100px" x="1340px" y="580px">
+          <score id="stack1" operation="multiply" value="2" /> <!-- begin push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- end push 1 -->
+        </overlay>
+
+        <overlay text="0" leadsTo="tape_input"   width="100px" height="100px" x="480px" y="880px">
+          <score id="stack2" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+        <overlay text="1" leadsTo="tape_input"   width="100px" height="100px" x="1340px" y="880px">
+          <score id="stack2" operation="multiply" value="2" /> <!-- begin push 1 -->
+          <score id="stack2" operation="add" value="1" /> <!-- end push 1 -->
+        </overlay>
+
+        <overlay text="Start" leadsTo="q0"   width="200px" height="150px" x="1580px" y="680px">
+        </overlay>
+      </message>
+    </parallel>
+  </subject>
+
+<!-- 0011100 -->
+
+  <!-- Assumption: starts at first 1  -->
+  <subject id="q0">
+    <media>
+      <message text="q0">
+        <!-- read 0, write 0, move right -->
+        <overlay text="0" leadsTo="q0"   width="100px" height="100px" x="910px" y="480px">
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+        <overlay text="1" leadsTo="q0"   width="100px" height="100px" x="1340px" y="480px">
+
+          <!-- read 1, write 1, move right -->
+          <score id="stack2" operation="divide" value="2" /> <!-- pop -->
+          <score id="stack1" operation="multiply" value="2" /> <!-- b push 1 -->
+          <score id="stack1" operation="add" value="1" /> <!-- e push 1 -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="q3">
+    <media>
+      <message text="q3">
+        <overlay text="1" leadsTo="q3"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <leadsTo subject="q4" condition="{{stack1}} == 1" /> <!-- check if stack is empty and go to accepting state -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+    <subject id="q4">
+    <media>
+      <message text="q4 - accept" />
+    </media>
+  </subject>
+
+</playlist>
+</ximpel>

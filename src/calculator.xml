@@ -1,0 +1,59 @@
+<ximpel> <!-- input alphabet: 0 and 1 -->
+<playlist>
+
+  <subject id="s0">
+    <sequence>
+      <message text="s0" >
+        <overlay text="s1a!" leadsTo="s1a"   width="250px" height="100px" x="480px" y="480px">
+          <score id="left" operation="set" value="2" />
+        </overlay>
+      </message>
+    </sequence>
+  </subject>
+
+  <subject id="s1a">
+    <sequence>
+      <message text="s1a" >
+        <overlay text="s1" leadsTo="s1"   width="250px" height="100px" x="480px" y="480px" />
+      </message>
+    </sequence>
+  </subject>
+
+  <subject id="s1">
+    
+    <sequence>
+      <message text="s1" >
+        <overlay text="s1" leadsTo="s1"   width="250px" height="100px" x="480px" y="480px" >
+        </overlay>
+      </message>
+    </sequence>
+  </subject>
+
+  <subject id="s2">
+    <!-- <leadsTo subject="s3" condition="{{left}} > 0" /> -->
+    <media>
+      <message text="s2" />
+    </media>
+  </subject>
+
+  <subject id="s3">
+    <media>
+      <message text="s3" />
+    </media>
+  </subject>
+
+</playlist>
+</ximpel>
+
+
+  
+  <!-- <subject id="init">
+    <media>
+      <message text="Init (example)">
+        <overlay leadsTo="menu"   width="400px" height="400px" x="780px" y="380px">
+          <score id="right" operation="set" value="0" />
+          <score id="left" operation="set" value="0" />
+        </overlay>
+      </message>
+    </media>
+  </subject> -->

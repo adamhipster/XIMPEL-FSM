@@ -285,7 +285,6 @@ ximpel.Parser.prototype.processSequenceNode = function( playlistModel, domElemen
 }
 
 // Process the <parallel> node. The result is a ParallelModel object.
-// Probably needs to be adapted, or maybe not even... -- Melvin
 ximpel.Parser.prototype.processParallelNode = function( playlistModel, domElement ){
 	// Get some info about the current domElement (like its parent, its children, etc)
 	var info = this.getDomElementInfo( domElement );

@@ -43,10 +43,10 @@
 		<script type="text/javascript" src="ximpel/media_types/Audio.js"></script>
 		<script type="text/javascript" src="ximpel/media_types/YouTube.js"></script>
 		<script type="text/javascript" src="ximpel/media_types/Message.js"></script>
-		<script type="text/javascript" src="ximpel/media_types/Terminal.js"></script>
+		<script type="text/javascript" src="ximpel/media_types/Iframe.js"></script>
+		<script type="text/javascript" src="ximpel/media_types/Terminal.js"></script> <!-- Only enable this if you use it. Otherwise it throws socket-io errors. -->
 		<script type="text/javascript" src="ximpel/media_types/Filler.js"></script>
 		<script type="text/javascript" src="ximpel/media_types/TextBlock.js"></script>
-		<!-- to add: Timeout.js een mediatype dat time skipped -->
 
 		<!-- Emotion Tracking -->
 		<script src="vendor/clmtrackr-dev/examples/js/libs/utils.js"></script> <!-- Helper functions -->
@@ -68,7 +68,10 @@
 				//   the width/height of the app and the element to use.
 				var myApp = new ximpel.XimpelApp(
 					'stefansapp',
-					'what_is_a_file.xml', 
+					// 'fsm.xml',
+					// 'pushdown_automata.xml',
+					// 'turing_machine.xml',
+					'calculator_interactive.xml',
 					'config.xml', 
 					{'appElement': 'ximpel1',
 					 /*'parentElement': $( document.body ),*/
@@ -94,15 +97,34 @@
 					var showScore = player.getConfigProperty('showScore');
 					
 					$('.scoreContainer').show();
-					$('#test').text(0);
-					$('#yolo').text(0);
 					// Add more score initializations here
 				
 					player.addEventHandler( 'variable_updated', function( variableId ){
 						console.log('variable updated', variableId);
-						$('#' + variableId).text( player.getVariable( variableId ) );
+						var value = player.getVariable( variableId );
+						var binaryValue = (value >>> 0).toString(2);
+						$('#' + variableId).text( value );
+						$('.' + variableId + '_binary').text( binaryValue );
+						if(variableId === "stack1"){
+							$("#head").text( new Array(binaryValue.length + 1).join( " " ) + "^" );
+						}
 					});
 				}.bind(this));
+
+				var symbols = [];
+
+				//FSM symbols display
+				$('.ximpelPlayer').on('click', function(e){
+					var span = e.target.tagName === "SPAN"? e.target : null;
+					if(!span) return;
+					var parent = $(span).parent()[0];
+					for(var i = 0; i < parent.classList.length; i++){
+						if(parent.classList[i] === "overlay"){
+							symbols.push(parent.innerText);
+							$('#symbols').text(symbols);
+						}
+					}
+				})
 			});
 
 
@@ -112,9 +134,24 @@
 
 	<body>
 		<div id="ximpel1">
-			<div class="scoreContainer">
-				<div class="score">Score Test: <span id="test"></span></div>
-				<div class="score">Score Yolo: <span id="yolo"></span></div>
+			<style>
+				.score {
+					font-family: 'Consolas', 'Courier New', Courier, monospace;
+				}
+			</style>
+			<div class="scoreContainer" style="left: 0px !important;">
+				<!-- <div class="score">stack1: <span id="stack1"></span></div>
+				<div class="score">stack1 binary: <span class="stack1_binary"></span></div>
+				<div class="score">stack2: <span id="stack2"></span></div>
+				<div class="score">stack2 binary: <span class="stack2_binary"></span></div>
+				<div class="score"><span class="stack1_binary"></span><bdo dir="rtl" class="stack2_binary"></bdo></div>
+				<pre class="score" style="display: inline;" id="head">LR</pre>
+				<div class="score">Symbols: <span id="symbols"></span></div> -->
+				<div class="score">Left: <span id="left"></span></div>
+				<div class="score">Left Shadow: <span id="left_shadow"></span></div>
+				<div class="score">Right: <span id="right"></span></div>
+				<div class="score">Right Shadow: <span id="right_shadow"></span></div>
+				<div class="score">Answer: <span id="answer"></span></div>
 				<!-- Add more score containers here -->
 			</div>
 		</div>

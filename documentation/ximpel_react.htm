@@ -1,0 +1,613 @@
+<html>
+	<head>
+		<title>XIMPEL - Documentation</title>
+
+		<!-- include syntax highlighter -->
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+		<link href="syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+		<!-- include jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<!-- include jquery ui -->
+		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css" />
+		<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		
+		<!-- include scripts/css for this documentation page. -->
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/main.js"></script>
+		<script type="text/javascript">
+			//
+			var activeSection=4;
+		</script>
+
+	</head>
+	<body>
+		<div id="container">
+			<script src="scripts/header.js"></script>
+			<script src="scripts/navigation.js"></script>
+
+			<div id="mainContentContainer">
+				<div id="mainContent">
+          <h2>XIMPEL React - Full Documentation</h2>
+          
+          <p>
+            <div class="ui-widget">	
+              <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                This is the documentation regarding a reimagined XIMPEL created with the ReactJS library.
+                While it is similar compared to the JavaScript/jQuery version of XIMPEL, it is not the same.
+                It furthermore has a couple of design decisions that break with ideas that the JavaScript/jQuery 
+                version of XIMPEL has.
+              </div>
+            </div>
+          </p>
+
+          <p>In the remainder of this document, the reimagined XIMPEL created with the ReactJS library is called: XIMPEL React.</p>
+
+          <p>The JavaScript/jQuery version of XIMPEL is called: XIMPEL JS.</p>
+
+          <p>
+            Since it is still an experimental version of XIMPEL, this version is more geared towards developers and less towards XIMPEL authors.
+            Do not let that scare you, XIMPEL React is similar to XIMPEL JS and a lot of things that work in XIMPEL JS work in XIMPEL React.
+            Moreover, each XIMPEL tag is mapped to one React component, and so the concepts can be seen as interchangeable to non-programmers. 
+            A note to programmers: one component is reused since all media type tags have some similar characteristics. This component is called <code>MediaType</code>.
+          </p>
+
+          <p>
+              One of the design decisions that are different is the resolution.
+              It has no 1920 x 1080 resolution. It has infinite dimensions, just like a web page. 
+          </p>
+
+          <h3>Server setup and starting it</h3>
+          <p>
+            For development use:
+            <br />
+            <code>NODE_ENV='development' webpack-dev-server --hot --inline</code>
+          </p>
+
+          <p>
+            For production use:
+            <br />
+            <code>NODE_ENV='production' webpack-dev-server --hot --inline</code>
+          </p>
+
+          <p>
+            <div class="ui-widget">	
+              <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                From here on out the rules per component are stated. These rules also pertain to the equivalent
+                XIMPEL tags. XIMPEL tags are not <strong style="color: red;">c</strong>apitalized, whereas their equivalent components written in React 
+                are <strong style="color: red;">C</strong>apitalized.
+              </div>
+            </div>
+          </p>
+
+          <h3>Ximpel</h3>
+            <p>
+              The <code>Ximpel</code> component checks whether the <code><ximpel></code> tag has been written. 
+              <br />
+              It sees if there is a <code><playlist></code> tag underneath it and will output a warning on the page and not render anything else. 
+              <br />
+              It does not check if there is one <code><ximpel></code> tag.
+              <br />
+
+              Example:
+              <pre class="brush: xml;">
+                <ximpel>
+                  <!-- content -->
+                </ximpel>
+              </pre>
+
+            <p>
+          <h3>Playlist</h3>
+            <p>
+              This component tracks which subject is being played. 
+              <br />
+              It also tracks all the global media items (media items that survive a subject switch, i.e. a global media type) and renders them if needed. 
+              <br />
+              It initializes the logging framework the <code>enableLogging</code> attribute is set to <code>"true"</code>. 
+              <br />
+              It also has two subscribed methods in the publish-subscribe system that XIMPEL React uses. 
+              <br />
+              It listens to any component publishing a topic on <code>leadsToUpdate</code> and it will update its own state to render a new subject. 
+              <br />
+              It also listens to when a <code>Media</code> or <code>Sequence</code> component signifies the topic of <code>addGlobalMediaItem</code>, in which case it adds a media item to its own <code>globalMediaItems</code> array so the media item is able to survive the subject switch. 
+              <br />
+              It renders the global media items and the underlying <code><subject></code> tag. If no <code><subject></code> tag has been specified it will display an error message on the page.
+              <br />
+
+              Example:
+              <pre class="brush: xml;">
+                <ximpel>
+                  <playlist>
+                    <!-- content -->
+                  </playlist>
+                </ximpel>
+              </pre>
+            </p>
+          <h3>Subject</h3>
+            <p>
+              This component looks for the underlying <code><media></code> or <code><sequence></code> tag. If it is not there it will display an error message on the page.
+              <br />
+
+              Example:
+              <pre class="brush: xml;">
+                <ximpel>
+                  <playlist>
+                    <subject id="lesson1">
+                      <!-- content -->
+                    </subject>
+                  </playlist>
+                </ximpel>
+              </pre>
+            </p>
+          <h3>Media</h3>
+            <p>
+              This component plays media items in parallel. 
+              <br />
+              It is able to render a <code><sequence></code> tag or any media tag. 
+              <br />
+              It will give an error message if no media type tags or <code><sequence></code> tags are children.
+              <br />
+              It counts how many of its children have stopped playing and notifies this to the parent. This notification is intended for the <code><sequence></code> tag. With it, the <code><sequence></code> tag knows that it is able to continue playing the next media type or <code>Media</code> component. If the parent is a <code><subject></code> then this notification is not relevant.
+              <br />
+              Before playing it checks to see if its first media item is a global media item. If it is, it will increment the stop counter since the responsibility of a global media item does not belong to the <code>Media</code> component but to the <code>Playlist</code> component.
+              <br />
+              When it renders a media tag, it also renders an element that tracks time for the media item as a parent. As of now this is called <code>MediaType</code> but it may also be called <code>MediaManager</code> later on. Here is a piece of example code.
+              <br />
+              <h4>An example of how each media item has a general component to manage itself for time tracking (among other things).</h4>
+              <pre class="brush: js">
+                &lt;MediaType stopCounter={this.stopCounter} {...element.attributes} playlist={element} key={this.state.key + i} render={mediatype =&gt; (
+                  &lt;Youtube {...element.attributes} mediatype={mediatype} text={element.text} playlist={element} /&gt;
+                )}/&gt;;</pre>
+              <br />
+
+              Example:
+              <pre class="brush: xml;">
+                <ximpel>
+                  <playlist>
+                    <subject id="lesson1">
+                      <media>
+                        <!-- You can put multiple media items in here  -->
+                        <!-- Design change from XIMPEL JS. The <media tag in XIMPEL JS allows you to put only *one* media type! Not multiple -->
+                      </media>
+                    </subject>
+                  </playlist>
+                </ximpel>
+              </pre>
+
+              <br />
+              This is a design change from XIMPEL JS, where the <code>media</code> tag allows for only one media item to be
+              played. Why the design change? Because <code>media</code> implies <em>multiple</em> mediums. Since it is unclear what 
+              constitutes one medium, it is saver to err on the side of plurality than singularity from a linguistic 
+              standpoint.
+            </p>
+          <h3>Sequence</h3>
+          <p>
+            This component plays a media item (or <code><media></code> tag) one at a time and will go to the next one when the duration of its current media item is finished. If a media item has no duration specified in the playlist, this media item will be playing it for an infinite amount of time. A <code><media></code> tag does not need a duration, it only needs to notify the <code>Sequence</code> component that it is done rendering all its children.
+            <br />
+            It will give an error message if no media type tags or <code><media></code> tags are children.
+            <br />
+            It counts which child it is playing and whether it is finished playing.
+            <br />
+            When it is finished playing it will notify its parent that it stopped. This notification is intended for the <code><media></code> tag so it knows that this component is done with rendering everything. If the parent is a <code><subject></code> then this notification is not relevant.
+            <br />
+            When it renders a media tag, it also renders an element that tracks time for the media item as a parent. As of now this is called <code>MediaType</code> but it may also be called <code>MediaManager</code> later on. 
+            <br />
+
+            Example:
+            <pre class="brush: xml;">
+              <ximpel>
+                <playlist>
+                  <subject id="lesson1">
+                    <sequence>
+                      <!-- You can put multiple media items in here which will be played in sequence -->
+                    </sequence>
+                  </subject>
+                </playlist>
+              </ximpel>
+            </pre>
+          </p>
+
+          <h3>Media Types (video, audio, youtube, message, textblock, image, terminal and iframe)</h3>
+          <p>
+            Most media types simply render themselves, take in the attributes of what was written in the playlist. <code>Video</code>, <code>Terminal</code> and (in future work) <code>YouTube</code> have more than only a call to a render method.
+            <br />
+            All media types are able to render overlays and overlays are only allowed to be rendered as children of media types.
+            <br />
+            The <code>Video</code> component also tells <code>MediaType</code> when it is done playing itself when it is not on repeat and it gives a reference of itself to <code>MediaType</code> in order for <code>MediaType</code> to improve time tracking (e.g. when a video is paused there is no time elapsing). The </code>Youtube</code> component could be programmed to do these things too, but as of now this has not been done yet.
+            <br />
+            The <code>Terminal</code> component connects to a server that runs a bash shell and communicates via web sockets. Because of this, it is able to handle form submission.
+            <br />
+            
+            <h4>Examples</h4>
+            <br />
+            Example 1 - a skeleton:
+            <pre class="brush: xml;">
+              <ximpel>
+                <playlist>
+                  <subject id="lesson1">
+                    <sequence>
+                      <!-- You can put multiple media items in here which will be played in sequence -->
+                      <!-- Note: for images and text, the sequence tag needs a duration -->
+                      <!-- Videos cannot repeat themselves, otherwise a sequence cannot be played -->
+                    </sequence>
+                  </subject>
+                </playlist>
+              </ximpel>
+            </pre>
+
+            <br />
+            Example 2 - an example playlist showing sequence and parallel play:
+            <pre class="brush: xml;">
+                <ximpel>
+                  <playlist>
+  
+                    <subject id="begin">
+                      <!-- shows media at the same time -->
+                      <media>
+                        <image src="some_image.jpg" width="200px" height="200px" x="200px" y="200px">
+                            <overlay leadsTo="middle" width="100px" height="0px" x="10px" y="0px" message="Go to middle"/>
+                        </image>
+                        <image src="another_image.png" width="200px" height="200px" x="400px" y="400px"></image>
+                        <textblock message="some message" x="800px" y="800px"></textblock>
+                      </media>
+                    </subject>
+
+                    <subject id="middle">
+                      <!-- shows media in sequence depending on the duration -->
+                      <sequence>
+                        <textblock duration="10" message="Yay!"/>
+                        <textblock duration="10" message="This message shows after the 10 seconds of 'Yay!' is up.">
+                            <overlay leadsTo="end" width="100px" height="0px" x="10px" y="0px" message="Go to end"/>
+                        </textblock>
+                      </sequence>
+                    </subject>
+  
+                    <subject id="end">
+                      <sequence>
+                        <!-- The following media tag is treated as *one* media item by the sequence tag -->
+                        <media>
+                          <youtube duration="10" id="sPq34N_qIHU" startPlaybackAt="0" width="1200px" height="800px"></youtube>
+                          <textblock duration="10" message="Interesting YouTube clip" width="200px" height="100px" x="10px" y="900px" fontsize='24px'/>
+                        </media>
+                        <!-- this is the second media item according to the sequence tag -->
+                        <textblock duration="5" message="the end"></textblock>
+                    </sequence>
+                    </subject>
+  
+                  </playlist>
+                </ximpel>
+              </pre>
+
+            <br />
+            Example 3 - combining website annotation with parallel and sequential play:
+            <br />
+            (Annotation is possible thanks to the <code>stopAtSubjectId</code> attribute in combination with the <code>iframe</code> media type)
+            
+            <pre class="brush: xml;">
+              <ximpel>
+                <playlist>
+
+                  <subject id="begin">
+                    <media>
+                        <iframe url="https://www.sqlteaching.com/" stopAtSubjectId="never_stop_ever_this_subject_does_not_exist" x="210px"></iframe> <!-- global media type! --> 
+                      <textblock message="This is the best resource that I know for learning the basics of database queries.
+                      A query is basically asking a question, so you are going to ask questions to a database!
+                      "
+                      width="200px" height="800px" x="10px" y="100px" fontsize='24px'>
+                        <overlay score="+200" scoreId="tips" leadsTo="videotip1" width="100px" height="0px" x="10px" y="0px" message="First tip"></overlay>
+                      </textblock>
+                    </media>
+                  </subject>
+
+                  <subject id="videotip1">
+                    <media>
+                      <youtube id="sPq34N_qIHU" startPlaybackAt="0" width="1200px" height="800px">
+                        <overlay score="+200" scoreId="tips" leadsTo="dismiss_tips" width="100px" height="0px" x="10px" y="1200px" message="next tip"/>
+                      </youtube>
+                      <textblock message="Watch time 90 seconds" width="200px" height="100px" x="10px" y="900px" fontsize='24px'></textblock>
+                    </media>
+                  </subject>
+
+                  <subject id="dismiss_tips">
+                    <sequence>
+                      <textblock duration="10" message="These were all the tips of the video website."></textblock>
+                      <textblock duration="10" message="If you want to see these tips again, please refresh the page."></textblock>
+                    </sequence>
+                  </subject>
+
+                </playlist>
+              </ximpel>
+            </pre>
+
+            <br />
+            Example 4 - an excerpt from a real playlist:
+            <pre class="brush: xml;">
+              <!-- Full playlist is at: http://classic.ximpelapps.nl/zaanseschans_html5/playlist.xml -->
+              <ximpel>
+                  <playlist>
+                      <subject id="Intro">
+                          <media>
+                              <video leadsTo="MenuDeBonteHen" repeat="true" controls="true">
+                                  <source extensions="mp4" file="videos/Intro"/>
+                                  <overlay height="180px" leadsTo="MenuDeBonteHen" startTime="2" width="180px" x="1700px" y="890px"/>
+                              </video>
+                          </media>
+                      </subject>
+
+                      <subject id="MenuDeBonteHen">
+                          <media>
+                              <video repeat="true">
+                                  <source extensions="mp4" file="videos/MenuDeBonteHen"/>
+                                  <overlay height="100px" leadsTo="WalkToHetJongeSchaap" width="350px" x="200px" y="970px"/>
+                                  <overlay height="100px" leadsTo="QuizBonteHenIntro" width="350px" x="800px" y="970px"/>
+                                  <overlay height="100px" leadsTo="TourOfMolenDeBonteHen" width="350px" x="1470px" y="970px"/>
+                              </video>
+                          </media>
+                      </subject>
+                      <subject id="QuizBonteHenIntro">
+                          <media>
+                              <video leadsTo="QuizMenuDeBonteHen">
+                                  <source extensions="mp4" file="videos/QuizDeBonteHenIntro"/>
+                              </video>
+                          </media>
+                      </subject>
+                      <subject id="QuizMenuDeBonteHen">
+                          <media>
+                              <video repeat="true">
+                                  <source extensions="mp4" file="videos/QuizBonteHenMenu"/>
+                                  <overlay height="70px" leadsTo="WrongBonteHenQuiz" width="700px" x="70px" y="970px"/>
+                                  <overlay height="70px" leadsTo="WrongBonteHenQuiz" width="650px" x="820px" y="970px"/>
+                                  <overlay height="70px" leadsTo="CorrectBonteHenQuiz" width="350px" x="1540px" y="970px"/>
+                              </video>
+                          </media>
+                      </subject>
+                      <subject id="WrongBonteHenQuiz">
+                          <media>
+                              <video leadsTo="MenuDeBonteHen">
+                                  <source extensions="mp4" file="videos/WrongAnswer"/>
+                              </video>
+                          </media>
+                      </subject>
+                      <subject id="CorrectBonteHenQuiz">
+                          <media>
+                              <video leadsTo="CorrectBonteHenQuizInfo">
+                                  <source extensions="mp4" file="videos/CorrectAnswer"/>
+                              </video>
+                          </media>
+                      </subject>
+
+                      <subject id="CorrectBonteHenQuizInfo">
+                          <media>
+                              <video leadsTo="MenuDeBonteHen">
+                                  <source extensions="mp4" file="videos/CorrectAnswerInfoDeBonteHen"/>
+                              </video>
+                          </media>
+                      </subject>
+                      <subject id="TourOfMolenDeBonteHen">
+                          <media>
+                              <video leadsTo="MenuDeBonteHen">
+                                  <source extensions="mp4" file="videos/TourOfMolenDeBonteHen"/>
+                                  <overlay duration="49" height="180px" leadsTo="MenuDeBonteHen" startTime="4" width="180px" x="1680px" y="870px"/>
+                              </video>
+                          </media>
+                      </subject>
+                      <subject id="WalkToHetJongeSchaap">
+                          <media>
+                              <video leadsTo="MenuMolenHetJongeSchaap">
+                                  <source extensions="mp4" file="videos/WalkToMolenHetJongeSchaap"/>
+                                  <overlay duration="31" height="200px" leadsTo="MenuMolenHetJongeSchaap" startTime="0.2" width="200px" x="1680px" y="850px"/>
+                              </video>
+                          </media>
+                      </subject>
+                  </playlist>
+              </ximpel>
+            </pre>
+
+            <br />
+            Example 5 - Melvin Roest his personal test playlist for development of XIMPEL React 
+            <br />
+            It tries to do crazy things to trip XIMPEL React, but it should work.
+
+            <pre class="brush: html;">
+              <ximpel>
+                <playlist enableLogging="false">
+                
+                  <subject id="test">
+                    <media>
+                      <audio>
+                        <source file="bensound_summer" extensions="mp3" />
+                        <overlay score="+200" scoreId="yay" leadsTo="lesson1" width="600px" height="75px" x="500px" y="500px">
+                          <rule if="{{yay}} > 5" leadsTo="lesson2" />
+                          <rule if="{{yay}} > 8" leadsTo="lesson3" />
+                        </overlay>
+                      </audio>
+                      <video startPlaybackAt="0" duration="6" startTime="0" width="600px" height="900px" x="200px" y="600px">
+                        <source file="pwd" extensions="mp4" types="video/mp4" />
+                      </video>
+                      <video startPlaybackAt="5" duration="5" startTime="6" width="400px" height="400px" x="500px" y="100px">
+                        <source file="ls" extensions="mp4" types="video/mp4" />
+                        <overlay score="+200" scoreId="yay" leadsTo="lesson1" width="600px" height="75px" x="900px" y="100px"/>
+                      </video>
+                    </media>
+                  </subject>
+            
+                  <subject id="lesson1">
+                    <media id="med1">
+                      <message duration="1" message="Command-line Tutorial" />
+                      <message duration="2" message="Do your best! We start with the command PWD" />
+                      <iframe url="https://en.wikipedia.org/wiki/Pwd" ></iframe>
+                      <sequence id="seq1">
+                        <!-- Note: the overlay in the YouTube tag is also global -->
+                        <p duration="2">Test 1</p>
+                        <youtube duration="10" id="DrgML20YxaA" width="400px" height="200px" left="1100px" top="200px" stopAtSubjectId="lesson4">
+                          <overlay duration="4" score="+200" scoreId="yay" leadsTo="lesson2" width="600px" height="75px" x="500px" y="500px" message="next lesson"/>
+                        </youtube>
+                        <p stopAtSubjectId="lesson4">This is a global overlay</p>
+                        <p duration="2">Test 2</p>
+                        <youtube duration="10" id="DrgML20YxaA" width="400px" height="200px" left="700px" top="200px" stopAtSubjectId="lesson3">
+                          <overlay duration="4" score="+200" scoreId="yay" leadsTo="lesson2" width="600px" height="75px" x="500px" y="500px" message="next lesson"/>
+                        </youtube>
+                        <media id="med2">
+                          <message duration="1" message="ready for PWD?" />
+                          <message duration="1" message="Here is a video!" />
+                          <sequence id="seq2">
+                            <video duration="6" x="0px" y="200px" width="400px" height="400px" repeat="false">
+                              <source file="./pwd" extensions="mp4" types="video/mp4" />
+                            </video>
+                            <message duration="2" message="The command ls helps you to list the files that are in the current directory you are working in." width="600px" height="800px" x="0px" y="0px" color="#0f0" fontsize='50px' />
+                            <image src="roads.jpg" duration="2" width="200" height="200" />
+                          </sequence>
+                        </media>  
+                        <message message="the end">
+                          <overlay score="+200" scoreId="yay" leadsTo="lesson2" width="600px" height="75px" x="500px" y="500px" message="next lesson"/>
+                        </message>
+                      </sequence>
+                    </media>
+                  </subject>
+            
+                  <subject id="lesson2">
+                      <media>
+                        <textblock message="The command ls helps you to list the files that are in the current directory you are working in." width="600px" height="800px" x="0px" y="0px" color="#0f0" fontsize='50px'>
+                          <overlay score="+1000" scoreId="yay" leadsTo="lesson3" width="600px" height="75px" x="600px" y="500px" message="next lesson"/>
+                        </textblock>
+                        <terminal />    
+                      </media>
+                  </subject>
+            
+                  <subject id="lesson3">
+                    <media>
+                      <message message="Almost there!">
+                          <overlay score="*400" scoreId="yay" leadsTo="lesson4" width="600px" height="75px" x="0px" y="500px" message="next lesson"/>
+                      </message>
+                    </media>
+                  </subject>
+            
+                  <subject id="lesson4">
+                      <media>
+                          <message message="You made it to the end of the course!" showScore="true" />
+                      </media>
+                  </subject>
+                </playlist>
+              </ximpel>
+            </pre>
+          </p>
+
+          <!-- <h3>Video</h3>
+          <h3>Audio</h3>
+          <h3>Source</h3>
+          <h3>YouTube</h3>
+          <h3>Message</h3>
+          <h3>Textblock</h3>
+          <h3>Image</h3>
+          <h3>Terminal</h3>
+          <h3>Iframe</h3> -->
+
+          <h3>Overlay</h3> 
+          <p>
+            This component has a static variable called <code>score</code> which is an object that tracks all the scores that are put as an attribute in the <code><overlay></code> tag. 
+            <br />
+            It tracks its own time, except when <code>MediaType</code> passes down a reference of the HTML5 video player. Then the time will be tracked for the overlay.
+            <br />
+            Other than tracking time it also tracks start time and duration.
+            <br />
+            It renders itself and has no children.
+            <br />
+            The most important feature of an overlay is that when it is clicked, it will publish a <code>leadsToUpdate</code> to any subscriber willing to listen which is the <code>Playlist</code> component, since it will start rendering a new <code>Subject</code> component, forcing a rerender of a whole new part of the playlist.
+            <br />
+
+            Example:
+
+            <pre class="brush: xml;">
+              <ximpel>
+                <playlist>
+
+                  <subject id="begin">
+                    <media>
+                      <image src="some_image.jpg" width="200px" height="200px" x="200px" y="200px">
+                        <overlay leadsTo="middle" width="100px" height="0px" x="10px" y="0px" message="Go to middle"></overlay>
+                      </image>
+                    </media>
+                  </subject>
+
+                  <subject id="middle">
+                    <media>
+                      <textblock duration="10" message="Yay!"></textblock>
+                    </media>
+                  </subject>
+  
+                </playlist>
+              </ximpel>
+            </pre>
+          </p>
+
+          <h3>Rule</h3>
+          <p>
+            The rule component is the replacement of the <code>leadsTo</code> tag. It checks if a score is big enough in order to do conditional rendering.
+            <br />
+            A rule can only be placed by an enclosed <code>overlay tag</code>. It cannot be outside of it!
+            <br />
+            Example:
+            <pre class="brush: html;">
+              <overlay>
+                  <rule if="{{baby_dolphins}} > 5" leadsTo="lesson2" ></rule>
+              </overlay>
+            </pre>
+          </p>
+
+          <h3>App</h3>
+          <p>
+            The top level React component that starts rendering the <code>Ximpel</code> component.
+          </p>
+
+          <p>
+            <div class="ui-widget">	
+              <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+                <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                The following headers and paragraphs explain code of XIMPEL React that does not have an equivalent tag.
+              </div>
+            </div>
+          </p>
+
+          <h3>MediaType (reused component)</h3>
+          <p>
+            The <code>MediaType</code> component is the only component that does not have a direct one to one mapping with the XIMPEL playlist. This component applies to all media types and acts a manager for every media type. All media types have a couple of requirements in common which is why this component was created.
+            <br />
+            It tracks: duration, the amount of seconds elapsed, whether it has to render itself, it also tracks an inner state of whether it should play and the underlying media type and when a media item needs to start playing.
+            <br />
+            It is able to get information from the underlying media type regarding the amount of seconds elapsed. This feature is also seen in XIMPEL JS, where it has been argued in the comments that the video and YouTube API are better able to track time than the JavaScript implementation of XIMPEL JS itself.
+            <br />
+            It notifies the <code>Media</code> or <code>Sequence</code> component when it stopped playing.
+            <br />
+            It renders overlays that are children of any media type tags. In the general architecture of XIMPEL React it is a rule that an overlay can only be rendered by a media type.
+          </p>
+
+          <h3>Helper functions<h3>
+          <h4>getCurrentTimeFromRef(mediaItemRef) -- currentTime</h4>
+            <p>
+              Gives the current time of a YouTube, HTML5 video or HTML5 audio tag, according to their respective APIs.
+            </p>
+
+          <h4>renderMediaType(element, key, notifyParent) -- renderedElement</h4>
+            <p>
+              A function used in: <code>Media</code>, <code>Sequence</code> and <code>Playlist</code>.
+              <br />
+              <code>Media</code> and <code>Sequence</code> use it for rendering media types pertaining to a particular subject.
+              <br />
+              <code>Playlist</code> uses it to render global media types that are associated with a <code>stopAtSubjectId</code> attribute.
+            </p>
+					<br /><br />
+					
+					
+					
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

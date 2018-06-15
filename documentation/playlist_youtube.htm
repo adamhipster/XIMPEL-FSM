@@ -100,6 +100,27 @@
 					To mute the audio of a YouTube video, you can set the mute attribute to true:
 					<pre class="brush: html;">&lt;youtube id=&quot;AI0RTvlm0hw&quot; mute=&quot;true&quot; /&gt;</pre>
 
+					<h3>Let a YouTube video stop playing at a specific subject</h3>
+
+					<p>
+						Normally, when a user changes to another subject, by clicking on an overlay, for example, all the media items
+						disappear and are replaced for the media items of the new subject. In some cases you do not want your YouTube video 
+						to disappear after a user switches a subject. In order to remedy this the <pre class="brush: html;">stopAtSubjectId</pre>
+						attribute was created.
+					</p>
+
+					Usage:
+					<br />
+					<pre class="brush: html;">
+						&lt;youtube id="7zL2x5SSb6Y" width="200px" height="200px" y="0px" x="50px" stopAtSubjectId="lesson4" /&gt;
+					</pre>
+
+					<p>
+						This particular YouTube video will only stop when the user switches to the subject with an id names lesson4. 
+						Note: it is only possible to have one subject for the video to stop at. Multiple subject identifiers will be interpreted
+						as one subject id. The feature to support multiple subject identifiers may be supported in a future release.
+					</p>
+
 					<br /><br />
 					
 					

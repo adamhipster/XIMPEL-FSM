@@ -174,7 +174,16 @@ ximpel.Player.prototype.playSubject = function( subjectModel ){
 	// one or more media models and parrallel models which in turn may contain sequence models again. This playback complexity is all handled by
 	// the sequence player so we do not need to worry about that here, we just need to tell the sequence player to start playing the sequence
 	// of our subject.
-	var sequenceModel = subjectModel.sequenceModel;
+	var sequenceModel = undefined;
+	if(subjectModel.sequenceModel){
+		sequenceModel = subjectModel.sequenceModel;
+	}
+	else if(subjectModel.parallelModel){
+		// If subjectModel, then pretend the parallelModel has a SequenceModel as parent.
+		// We need to keep the illusion that the ximpel player has only one SequenceModel.
+		sequenceModel = new ximpel.SequenceModel();
+		sequenceModel.add(subjectModel.parallelModel);
+	}
 
 	// In the playlist you can define variables/scores to be changed when a subject starts. When you do this
 	// the parser will add a variableModifier object and store it in a list of variableModifiers for that subject.
@@ -307,22 +316,27 @@ ximpel.Player.prototype.applyVariableModifier = function( variableModifier ){
 		case variableModifier.OPERATION_ADD:
 			var newValue = Number(currentVariableValue) === NaN ? 0 : Number(currentVariableValue);
 			newValue += Number( variableModifier.value );
+			newValue = parseInt(newValue);
 			break;
 		case  variableModifier.OPERATION_SUBSTRACT:
 			var newValue = Number(currentVariableValue) === NaN ? 0 : Number(currentVariableValue);
 			newValue -= Number( variableModifier.value );
+			newValue = parseInt(newValue);
 			break;
 		case variableModifier.OPERATION_MULTIPLY:
 			var newValue = Number(currentVariableValue) === NaN ? 0 : Number(currentVariableValue);
 			newValue *= Number( variableModifier.value );
+			newValue = parseInt(newValue);
 			break;
 		case variableModifier.OPERATION_DIVIDE:
 			var newValue = Number(currentVariableValue) === NaN ? 0 : Number(currentVariableValue);
 			newValue /= Number( variableModifier.value );
+			newValue = parseInt(newValue);
 			break;
 		case variableModifier.OPERATION_POWER:
 			var newValue = Number(currentVariableValue) === NaN ? 0 : Number(currentVariableValue);
 			newValue = Number( Math.pow(newValue, variableModifier.value ) );
+			newValue = parseInt(newValue);
 			break;
 		default:
 			var newValue = currentVariableValue;

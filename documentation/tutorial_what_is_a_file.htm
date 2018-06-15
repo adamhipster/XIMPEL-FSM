@@ -1,0 +1,423 @@
+<html>
+	<head>
+		<title>XIMPEL - Documentation</title>
+
+		<!-- include syntax highlighter -->
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+		<link href="syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+		<!-- include jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<!-- include jquery ui -->
+		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css" />
+		<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		
+		<!-- include scripts/css for this documentation page. -->
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/main.js"></script>
+		<script type="text/javascript">
+			//
+			var activeSection=5;
+		</script>
+
+	</head>
+	<body>
+		<div id="container">
+			<script src="scripts/header.js"></script>
+			<script src="scripts/navigation.js"></script>
+
+			<div id="mainContentContainer">
+				<div id="mainContent">
+					<h2>Examples - Simple Presentation</h2>
+					<p>
+						This page analyzes a XIMPEL presentation created to teach computer illiterate but smart phone savvy people what files, folders and applications are.
+						The content is not too important, the techniques used in it, however, are illustrative in understanding in how to create XIMPEL presentations.
+						Unfortunately, since the images are copyrighted, we cannot give the media assets. However, we did create a YouTube video that shows the presentation
+						and also explains the text written below in much more detail.
+					</p>
+
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/B2kD05W4-uQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+					<h3>The config tag</h3>
+					<p>The config tag allows to enable controls (pause, stop and resume) and enables the display method to be set to overlays.</p>
+
+					<h3>Overlays</h3>
+					<p>A lot of subjects have overlays. The <code>leadsTo</code> attribute always lead to another subject of which the <score>id</score> has the same name as the <score>leadsTo attribute of the overlay.</score></p>
+				
+					<h3>Score</h3>
+					<p>
+						Some subjects have a <code>score</code> tag associated to them. If the <code>overlay</code> tag encloses the <code>score</code> tag,
+						then the value of the <code>score</code> tag is only applied when that overlay is clicked. When the <code>score</code> tag is enclosed
+						by the subject, then the value of the <code>score</code> tag is applied when the user arrives at the subject which encloses the <code>score</code> tag.
+					</p>
+
+					<h3>Questions</h3>
+					<p>
+						While it is possible to use the <code>quiz</code> tag to introduce questions, it is not strictly needed.
+						In the subject <code>remember_what_folders_do_question</code> it is shown how to do a question strictly 
+						through overlays and extra subjects for providing feedback.
+					</p>
+
+					<pre class="brush: html;">
+							&lt;ximpel&gt;
+							&lt;config&gt;
+									&lt;enableControls&gt;true&lt;/enableControls&gt;
+									&lt;controlsDisplayMethod&gt;overlay&lt;/controlsDisplayMethod&gt;
+							&lt;/config&gt;
+									&lt;playlist&gt;
+							
+											&lt;subject id="intro_file"&gt; 
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="file_example1" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="Files and folders"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="file_example1"&gt;
+													&lt;parallel&gt;
+															&lt;image src="what_is_a_file/filing_cabinet1.jpg"&gt;
+																	&lt;overlay leadsTo="file_example2" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="A filing cabinet with files"&gt;
+																			&lt;score id="test" operation="add" value="5" /&gt;
+																			&lt;score id="yolo" operation="add" value="5" /&gt;
+																	&lt;/overlay&gt;
+															&lt;/image&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="file_example2" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="400px" text="meh"&gt;
+																			&lt;score id="test" operation="add" value="7" /&gt;
+																			&lt;score id="yolo" operation="add" value="7" /&gt;
+																	&lt;/overlay&gt;
+															&lt;/filler&gt;
+													&lt;/parallel&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="file_example2"&gt;
+													&lt;parallel&gt;
+															&lt;image src="what_is_a_file/filing_cabinet2.jpg"&gt;
+																	&lt;overlay leadsTo="intro_folder" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Another filing cabinet with files"/&gt;
+																	&lt;score id="test" operation="add" value="30" /&gt;
+																	&lt;score id="yolo" operation="add" value="30" /&gt;
+															&lt;/image&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="intro_folder" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="400px" text="moo"/&gt;
+																	&lt;score id="test" operation="add" value="14" /&gt;
+																	&lt;score id="yolo" operation="add" value="14" /&gt;
+															&lt;/filler&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="intro_folder" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="0px" text="woohooo"&gt;
+																	&lt;score id="test" operation="add" value="42" /&gt;
+																	&lt;score id="yolo" operation="subtract" value="1337" /&gt;
+															&lt;/overlay&gt;
+															&lt;/filler&gt;
+													&lt;/parallel&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="intro_folder"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="folder_example1" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="What is a folder?"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="folder_example1"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/folder1.jpg"&gt;
+																	&lt;overlay leadsTo="folder_example2" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="280px" text="This is a folder"/&gt;
+																	&lt;score id="test" operation="subtract" value="15" /&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="folder_example2"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/folder2.jpg"&gt;
+																	&lt;overlay leadsTo="folder_example3" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="280px" text="Another one!"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="folder_example3"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/folder_manilla.jpg"&gt;
+																	&lt;overlay leadsTo="folder_transition_to_metaphore" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="280px" text="This is a manilla folder"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="folder_transition_to_metaphore"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/mac_folder_icon.png"&gt;
+																	&lt;overlay leadsTo="folder_transition_to_metaphore2" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="280px" text="Looks a lot like this! (on Mac)"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="folder_transition_to_metaphore2"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/windows_folder_icon.png"&gt;
+																	&lt;overlay leadsTo="mac_finder" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Or this! (on Windows)"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="mac_finder"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/mac_finder.jpg"&gt;
+																	&lt;overlay leadsTo="windows_explorer" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="You can find them here (Mac)"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="windows_explorer"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/windows_explorer.png"&gt;
+																	&lt;overlay leadsTo="remember_what_folders_do_question" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Or here (Windows)"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="remember_what_folders_do_question"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="0px" text="What do folders do?"/&gt;
+							
+																	&lt;overlay leadsTo="remember_what_folders_do_elaborate" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="200px" text="a) Organize files"/&gt;
+							
+																	&lt;overlay leadsTo="remember_what_folders_do_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="400px" text="b) Store detailed information such as text"/&gt;
+							
+																	&lt;overlay leadsTo="remember_what_folders_do_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="600px" text="c) Interpret data"/&gt;
+							
+																	&lt;overlay leadsTo="remember_what_folders_do_correct" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="d) Group files"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="remember_what_folders_do_wrong"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/folder_organize.jpg"&gt;
+																	&lt;overlay leadsTo="what_are_files" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="0px" text="Wrong. Remember a folder groups files together"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="remember_what_folders_do_correct"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/folder_organize.jpg"&gt;
+																	&lt;overlay leadsTo="what_are_files" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="0px" text="Correct! Remember a folder groups files together"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="remember_what_folders_do_elaborate"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/folder_organize.jpg"&gt;
+																	&lt;overlay leadsTo="what_are_files" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="0px" text="What do you mean?"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="what_are_files"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/real_file_examples.jpg"&gt;
+																 &lt;overlay leadsTo="files_mac" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="0px" text="Files come in many shapes"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="files_mac"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/files_mac.png"&gt;
+																 &lt;overlay leadsTo="files_mac_question" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Also on the computer"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="files_mac_question"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/files_mac.png"&gt;
+																 &lt;overlay alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="250px" text="What kind of file is this?"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_question_elaboration" alpha="0.25" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="75px" height="75px" x="1026px" y="120px"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="400px" text="a) image file"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="550px" text="b) text file"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_correct" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="700px" text="c) music file"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="850px" text="d) video file"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="files_mac_question_elaboration"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/files_mac.png"&gt;
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="250px" text="That one! What kind of file is it?"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_question_elaboration" alpha="0.25" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="75px" height="75px" x="1026pox" y="120px"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="400px" text="a) image file"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="550px" text="b) text file"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_correct" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="700px" text="c) music file"/&gt;
+							
+																 &lt;overlay leadsTo="files_mac_answer_wrong" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="850px" text="d) video file"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="files_mac_answer_wrong"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/files_mac.png"&gt;
+																 &lt;overlay leadsTo="apps" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Wrong. It is a music file!"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="files_mac_answer_correct"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/files_mac.png"&gt;
+																 &lt;overlay leadsTo="apps" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Correct! It is a music file!"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="apps"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="example_apps_intro" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="Let's talk about apps"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="example_apps_intro"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="example_apps-whatsapp" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="You may know"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="example_apps-whatsapp"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/whatsapp.png"&gt;
+																 &lt;overlay leadsTo="example_apps-skype" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="WhatsApp"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="example_apps-skype"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/skype.png"&gt;
+																 &lt;overlay leadsTo="example_apps-browser" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Skype"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="example_apps-browser"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/browser.png"&gt;
+																 &lt;overlay leadsTo="applications" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Google Chrome or Firefox or Internet Explorer"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="applications"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="apps_read_files" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="They are also called applications"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="apps_read_files"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="example_apps-word" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="Some apps can read files!"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="example_apps-word"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/word.png"&gt;
+																 &lt;overlay leadsTo="example_apps-word2" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="Word"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="example_apps-word2"&gt;
+													&lt;media&gt;
+															&lt;image src="what_is_a_file/word_document.jpg"&gt;
+																 &lt;overlay leadsTo="apps_read_files-word" alpha="0.5" hoverAlpha="0.5" textColor="#fff" backgroundColor="#000" fontSize="6em" width="1980px" height="150px" x="0px" y="800px" text="This is how a Word file looks like"/&gt;
+															&lt;/image&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="apps_read_files-word"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="apps_read_files-music" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="A Word application reads Word files"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="apps_read_files-music"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="computer_example_intro" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="A music application reads music files"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="computer_example_intro"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="computer_example" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="Let's look at the computer"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="computer_example"&gt;
+													&lt;media&gt;
+															&lt;video leadsTo="end" width="1980px" height="1080px"&gt;
+																	&lt;source file="what_is_a_file/computer_example" extensions="mp4" types="video/mp4" /&gt;
+																	&lt;overlay alpha="0.75" hoverAlpha="0.75" backgroundColor="#000" textColor="#fff" fontSize="6em" width="1920" height="150px" x="0px" y="650px" text="Duration: 1 minute and 45 seconds"/&gt;
+																	&lt;overlay startTime="5" leadsTo="end" alpha="0.75" hoverAlpha="0.75" backgroundColor="#000" textColor="#fff" fontSize="6em" width="1920" height="150px" x="0px" y="800px" text="Skip (click here)"/&gt;
+															&lt;/video&gt; 
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+											&lt;subject id="end"&gt;
+													&lt;media&gt;
+															&lt;filler&gt;
+																	&lt;overlay leadsTo="nothing" alpha="0" hoverAlpha="0" textColor="#fff" fontSize="6em" width="1980px" height="1080px" x="0px" y="0px" text="Have fun with apps, files and folders!"/&gt;
+																	&lt;overlay leadsTo="computer_example" alpha="0.75" hoverAlpha="0.75" backgroundColor="#000" textColor="#fff" fontSize="6em" width="1920" height="150px" x="0px" y="800px" text="Or go back to the previous video (click here)"/&gt;
+															&lt;/filler&gt;
+													&lt;/media&gt;
+											&lt;/subject&gt;
+							
+									&lt;/playlist&gt;
+							&lt;/ximpel&gt;
+							
+							
+
+					</pre>
+
+					<br /><br />
+					
+					
+					
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

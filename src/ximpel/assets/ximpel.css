@@ -103,10 +103,10 @@
 	display: none;
 	position: absolute;
 	top: 0;
-	right: 0;
+	left: 0;
 	padding: 10px;
 	z-index: 1;
-	background: rgba(0, 0, 0, 0.7);
+	background: rgba(0, 0, 0, 0.1);
 }
 
 .scoreContainer .score {
@@ -176,3 +176,15 @@
 /* 	
  * transform: translate3d( 0,0,0 ); might work for overflow: hidden bugs in chrome 
  */
+
+	iframe {
+		position: absolute !important;
+		overflow-y: scroll !important;
+		-ms-zoom: 2.5;
+		-moz-transform: scale(2.5);
+		-moz-transform-origin: 0 0;
+		-o-transform: scale(2.5);
+		-o-transform-origin: 0 0;
+		-webkit-transform: scale(2.5);
+		-webkit-transform-origin: 0 0;
+	}

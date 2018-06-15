@@ -156,7 +156,25 @@
 					They are pretty self descriptive. For example <code>add</code> adds the specified value to the current variable, <code>set</code> sets the value of the variable to the specified value, <code>power</code> uses the specified value as exponent/power and the current variable value as the base (ie. <code>new_score = current_score<sup>value</sup></code>).
 					<br /><br />
 					
+					<h3>Score influencing media item content</h3>
+
+					<p>A score can influence what media items a viewer can see in the presentation like so:</p>
+
+					<pre class="brush: html;">
+						&lt;subject id=&quot;subject1&quot; leadsTo=&quot;subject1&quot;&gt;
+							&lt;media&gt;
+								&lt;picture src=&quot;myimage.png&quot; leadsTo="subject1"&gt;
+									&lt;overlay leadsTo="subject1"x=&quot;0px&quot; y=&quot;0px&quot; width=&quot;150px&quot; height=&quot;150px&quot; &gt;
+										&lt;leadsTo subject=&quot;subject2&quot; condition=&quot;{{unicorn_score}} &gt; 7&quot; /&gt;
+										&lt;leadsTo subject=&quot;subject3&quot; condition=&quot;{{unicorn_score}} &gt; 6&quot; /&gt;
+										&lt;score id="unicorn_score" operation="add" value="1" /&gt;
+									&lt;/overlay&gt;
+								&lt;/picture&gt;
+							&lt;/media&gt;
+						&lt;/subject&gt;</pre>
+					</pre>
 					
+					<p>In this particular case, the score called <code>unicorn_score</code> will go up until 7 and then subject2 will be shown. However, if the viewer of the presentation somehow comes back to this subject and then clicks again, then he or she will jump to subject3. <code>unicorn_score</code> will then be 8. More information can be found in:  <a href="playlist_subjects.htm#conditional_subjects">conditional subjects</a> and <a href="playlist_overlays.htm#conditional_overlays">conditional overlays</a>. </p>
 					
 
 				</div>

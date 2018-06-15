@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>XIMPEL - Documentation</title>
+
+		<!-- include syntax highlighter -->
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+		<link href="syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+		<!-- include jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<!-- include jquery ui -->
+		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css" />
+		<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		
+		<!-- include scripts/css for this documentation page. -->
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/main.js"></script>
+		<script type="text/javascript">
+			//
+			var activeSection=4;
+		</script>
+
+	</head>
+	<body>
+		<div id="container">
+			<script src="scripts/header.js"></script>
+			<script src="scripts/navigation.js"></script>
+
+			<div id="mainContentContainer">
+				<div id="mainContent">
+					<h2>XIMPEL analytics</h2>
+					The following is documentation about how to capture data from people using your XIMPEL application.
+
+					<h3>Introduction</h3>
+					The XIMPEL Analytics library is a small frontend and backend application written in HTML5/CSS/JS and NodeJS. The data it captures are:
+					<ul>
+						<li>Mouse clicks (x, y, app id, screen width, screen height)</li>
+						<li>Mouse moves (x, y, app id, screen width, screen height)</li>
+						<li>The user history graph (subject id, start time)</li>
+						<li>Classified facial expressions between a value of 0 and 1 (joy, anger, sadness, surprise)</li>
+					</ul>
+					<p>The image shows a specific example of this.</p>
+					<img src="figures/ximpel_analytics_data.png" alt="an example of specific values of the data that the XIMPEL Analytics library captures" style="width:50%; height:50%;" />
+
+					<p>This data is then captures to a server and stored in a database. You could create your own server or use the off the shelf server created by us. 
+						See the code on <a href="https://github.com/melvinroest/ximpel-analytics-server">Github (Ximpel Analytics Server)</a>. 
+					</p>
+
+					<h4>Sessions created by the server</h4>
+					<p>The server creates a user session per browser agent. It also creates a session every time that XIMPEL is running by a user. For example,
+						one user plays a XIMPEL presentation 3 times (Alice) and another user plays a XIMPEL presentation 5 times (Bob). Then in total, there are two
+						user sessions logged, one for Alice and one for Bob. And there are 8 XIMPEL sessions recorded, 3 for Alice and 5 for Bob.
+					</p>
+
+					<h3>Server setup</h3>
+					<p>Run the app with <code>node app.js &lt;portnumber&gt;</code>. 
+					The server requires a database. The server works with postgres, but this can be easily changed to MySQL or SQLite in the <code>db.js</code> file. 
+					The NodeJS server uses a Sequelize ORM, which is able to perform ORM-style queries or plain SQL queries. Both are used in <code>db.js</code>.</p>
+
+					<p>
+						The defaults of the server are:
+						<ul>
+							<li>port number: 3333 <br />(or set a port number as command-line argument, i.e. <code>node app.js 8888</code>)</li>
+							<br />
+							<li>session secret: "debug_test_value" <br /> (never use this in production, set the environment variable <code>SESSION_SECRET</code>)</li>
+							<br />
+							<li>Database name: "default_debug_test_database_name" <br /> (set the environment variable <code>XIMPEL_DB_NAME</code>)</li>
+							<br />
+							<li>Database user: "default_debug_user" <br /> (set the environment variable <code>POSTGRES_USER</code>)</li>
+							<br />
+							<li>Database password: "default_debug_password" <br /> (set the environment variable <code>POSTGRES_PASSWORD</code>)</li>
+							<br />
+							<li>Delete table data upon server startup: true <br /> (set <code>paranoid: false</code> instead of <code>paranoid: true</code> to not delete table data upon server startup.</li>
+						</ul>
+
+						
+					</p>
+
+					<h3>Testing</h3>
+					<p>To test the server call <code>npm test</code> from the terminal. Or do it more manually with <code>node test/fill_db_with_data.js &amp;&amp; mocha test/test.js</code></p>
+
+					<h3>Database schema</h3>
+					<p>The complete schema is found in <code>complete_schema.txt</code></p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

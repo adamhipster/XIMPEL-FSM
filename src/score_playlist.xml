@@ -12,16 +12,16 @@
         <subject id="subject2">
             <media>
                 <youtube id="iNr0efL7Wz8" duration="30">
-                    <variable id="score1" operation="add" value="100" />
-                    <variable id="score2" operation="substract" value="50" />
+                    <variable id="test" operation="add" value="100" />
+                    <variable id="yolo" operation="subtract" value="50" />
                 </youtube>
             </media>
         </subject>
         <subject id="subject3">
             <media>
                 <youtube id="iBTIQ--9er0" duration="30">
-                    <variable id="score1" operation="substract" value="50" />
-                    <variable id="score2" operation="add" value="75" />
+                    <variable id="test" operation="subtract" value="50" />
+                    <variable id="yolo" operation="add" value="75" />
                 </youtube>
             </media>
         </subject>

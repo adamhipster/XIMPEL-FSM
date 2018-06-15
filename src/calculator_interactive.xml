@@ -1,0 +1,80 @@
+<ximpel> <!-- input alphabet: 0 and 1 -->
+<playlist>
+  <subject id="menu">
+    <score id="left_shadow" operation="set" value="0" />
+    <score id="right_shadow" operation="set" value="0" />
+    <score id="answer" operation="set" value="0" />
+    <media>
+      <message text="Menu">
+        <overlay text="Multiply!" leadsTo="multiply_outer_loop"   width="250px" height="100px" x="480px" y="480px" />
+        <overlay text="+1 left" leadsTo="menu"    width="200px" height="100px" x="880px" y="480px">
+          <score id="left" operation="add" value="1" />
+        </overlay>
+        <overlay text="+1 right" leadsTo="menu"    width="200px" height="100px" x="1280px" y="480px">
+          <score id="right" operation="add" value="1" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="multiply_outer_loop">
+    <score id="left" operation="subtract" value="1" />
+    <score id="left_shadow" operation="add" value="1"/>
+    <media>
+      <message text="Multiply outer loop">
+        <overlay text="again"  width="200px" height="100px" x="480px" y="480px">
+          <leadsTo subject="multiply_inner_loop" condition="{{left}} > -1" />
+          <leadsTo subject="done" condition="{{left}} == -1" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="multiply_inner_loop">
+    <score id="right" operation="subtract" value="1" />
+    <score id="right_shadow" operation="add" value="1"/>
+    <score id="answer" operation="add" value="1" />
+    <media>
+      <message text="Multiply inner loop">
+        <overlay text="again" leadsTo="multiply_inner_loop"   width="200px" height="100px" x="480px" y="480px">
+          <leadsTo subject="reset_variables_for_inner_loop" condition="{{right}} == 0" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+   <subject id="reset_variables_for_inner_loop">
+    <score id="right" operation="add" value="1" />
+    <score id="right_shadow" operation="subtract" value="1" />
+    <media>
+      <message text="Reset variables inner loop">
+        <overlay text="reset" leadsTo="reset_variables_for_inner_loop"   width="200px" height="100px" x="480px" y="480px">
+          <leadsTo subject="done" condition="{{left}} == 0" />
+          <leadsTo subject="multiply_outer_loop" condition="{{right_shadow}} == 0" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="done">
+    <media>
+      <message text="Done">
+      </message>
+    </media>
+  </subject>
+
+</playlist>
+</ximpel>
+
+
+  
+  <!-- <subject id="init">
+    <media>
+      <message text="Init (example)">
+        <overlay leadsTo="menu"   width="400px" height="400px" x="780px" y="380px">
+          <score id="right" operation="set" value="0" />
+          <score id="left" operation="set" value="0" />
+        </overlay>
+      </message>
+    </media>
+  </subject> -->

@@ -4,7 +4,7 @@ ximpel.Analytics = function(){
 
 //ref: ximpel.Player.prototype.playSubject in Player.js -- adds a subject when a subject is played
 ximpel.Analytics.prototype.addSubject = function(subject){
-  this.sendLastSubjectToDatabase(this.subjectHistory[this.subjectHistory.length-1]);
+  // this.sendLastSubjectToDatabase(this.subjectHistory[this.subjectHistory.length-1]);
   this.subjectHistory.push({
     subjectId: subject.getId(),
     startTime: Date.now(),
@@ -12,8 +12,8 @@ ximpel.Analytics.prototype.addSubject = function(subject){
     mouseClicks: [],
     facialExpressionsHistory: []
   });
-  console.log('this.subjectHistory');
-  console.log(this.subjectHistory);
+  // console.log('this.subjectHistory');
+  // console.log(this.subjectHistory);
 }
 
 ximpel.Analytics.prototype.sendLastSubjectToDatabase = function(subject){
@@ -39,20 +39,20 @@ ximpel.Analytics.prototype.sendLastSubjectToDatabase = function(subject){
 //but not of the XIMPEL xml tags itself.
 ximpel.Analytics.prototype.initialize = function(){
   //initialize the XIMPEL session on the serve
-  console.log('analytics init');
-  $.ajax({
-    method: "POST",
-    url: "http://localhost:3333/beginximpelsession",
-    data: {dummy: "dummy"},
-    xhrFields: { withCredentials: true },
-    crossDomain: true,
-    success: function(data){
-      console.log('beginximpelsession succes', JSON.stringify(data));
-    },
-    error: function( jqXHR, textStatus, errorThrown ){
-      console.log('beginximpelsession fail', jqXHR, textStatus, errorThrown);
-    }
-  })
+  // console.log('analytics init');
+  // $.ajax({
+  //   method: "POST",
+  //   url: "http://localhost:3333/beginximpelsession",
+  //   data: {dummy: "dummy"},
+  //   xhrFields: { withCredentials: true },
+  //   crossDomain: true,
+  //   success: function(data){
+  //     console.log('beginximpelsession succes', JSON.stringify(data));
+  //   },
+  //   error: function( jqXHR, textStatus, errorThrown ){
+  //     console.log('beginximpelsession fail', jqXHR, textStatus, errorThrown);
+  //   }
+  // })
 
   //initialize event handlers
   document.getElementsByClassName('ximpelWrapper')[0].addEventListener('mousemove', this.addMouseMove.bind(this));

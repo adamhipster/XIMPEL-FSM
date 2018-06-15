@@ -177,9 +177,8 @@ ximpel.MediaPlayer.prototype.play = function( mediaModel ){
 	}
 
 	// Ignore this play() call if the media player is already in a playing state.
-	// mightbebug -- melvin
-	if( this.isPlaying() && !this.mediaModel.parallelModelIsParent){
-		ximpel.warn("MediaPlayer.play(): play() called while already playing.");
+	if( this.isPlaying() ){
+		ximpel.warn("MediaPlayer.play(): play() called while already playing. See ximpel.MediaPlayer.prototype.play. If this is parallel player related, consider adding && !this.mediaModel.parallelModelIsParent to the if-statement that triggers this error.");
 		return this;
 	} 
 	else if( this.isPaused() ){

@@ -1,0 +1,75 @@
+<ximpel>
+<playlist>
+<!-- Technological artefact: q0 is meant to initialize the stack -->
+<!-- It switches q1 when the user clicks on the overlay -->
+  <subject id="q0">
+    <media>
+      <message text="q0 - init state">
+        <overlay leadsTo="q1"   width="400px" height="400px" x="780px" y="380px">
+          <score id="stack1" operation="set" value="1" />
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <!-- The real start -->
+  <subject id="q1">
+    <media>
+      <message text="q1">
+        <overlay text="0" leadsTo="q2"   width="100px" height="100px" x="480px" y="480px">
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="q2">
+    <media>
+      <message text="q1">
+        <overlay text="0" leadsTo="q2"   width="100px" height="100px" x="480px" y="480px">
+          <score id="stack1" operation="multiply" value="2" /> <!-- push 0 -->
+        </overlay>
+        <overlay text="1" leadsTo="q3"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+  <subject id="q3">
+    <media>
+      <message text="q3">
+        <overlay text="1" leadsTo="q3"   width="100px" height="100px" x="1340px" y="480px">
+          <score id="stack1" operation="divide" value="2" /> <!-- pop -->
+          <leadsTo subject="q4" condition="{{stack1}} == 1" /> <!-- check if stack is empty and go to accepting state -->
+        </overlay>
+      </message>
+    </media>
+  </subject>
+
+    <subject id="q4">
+    <media>
+      <message text="q4 - accept" />
+    </media>
+  </subject>
+
+</playlist>
+</ximpel>
+
+<!--                   L = {0,1 | 0^n 1^n for n >= 0 }        -->
+<!--                                                          -->
+<!--                        0,0/0      1,0/ε                  -->
+<!--                      ⋅→→→→→→→⋅  ⋅→→→→→→→⋅                -->
+<!--                      ↑       ↓  ↑       ↓                -->
+<!--                      ↑       ↓  ↑       ↓                -->
+<!--     ε,ε/$     0,$/0  *←←←←←←←⋅  *←←←←←←←⋅                -->
+<!--   *→→→→→→→q1*→→→→→→→q2*→→→→→→→→q3*→→→→→→→→|q4|           -->
+<!--                         1,0/ε      ε,$/ε                 -->
+<!--                                                          -->
+<!--               NOTATION                                   -->
+<!--               A,B/C                                      -->
+<!--               A is input symbol                          -->
+<!--               B is symbol on top of the stack            -->
+<!--               C is symbol pushed on top of the stack     -->
+<!--               ε is pop symbol of stack                   -->
+<!--               $ is symbol as first entry on stack        -->

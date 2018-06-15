@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<title>XIMPEL - Documentation</title>
+
+		<!-- include syntax highlighter -->
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+		<link href="syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+		<!-- include jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<!-- include jquery ui -->
+		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css" />
+		<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		
+		<!-- include scripts/css for this documentation page. -->
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/main.js"></script>
+		<script type="text/javascript">
+			//
+			var activeSection=1;
+		</script>
+
+	</head>
+	<body>
+		<div id="container">
+			<script src="scripts/header.js"></script>
+			<script src="scripts/navigation.js"></script>
+
+			<div id="mainContentContainer">
+				<div id="mainContent">
+					<h2>Syntax - Filler mediatype</h2>
+					<p>The filler media type does nothing. In some situations it is exactly what you need. See for example <a href="playlist_media_types.htm#parallel_complex_example" target="_blank">here</a> where parallel play, sequential play are mixed with fillers in order to get the timing right.</p>
+
+					<h4>playlist.xml</h4>
+					<pre class="brush: html;">
+						&lt;ximpel&gt;
+							&lt;playlist&gt;
+							    &lt;subject&gt;
+							        &lt;media&gt;
+										&lt;filler /&gt;
+							        &lt;/media&gt;
+							    &lt;/subject&gt;
+							&lt;/playlist&gt;
+						&lt;/ximpel&gt;</pre>
+					
+
+
+
+
+					<h3>Infinite fillers vs fillers that have a time duration</h3>
+					<p>
+						If you want a filler that shows infinitely long, then you do not need to give a duration. However, if you want a filler to last for a couple of seconds, then the <code>duration</code> attribute needs to be given like so:
+					</p>
+
+					<pre class="brush: html;">
+						&lt;filler duration="10" /&gt;</pre>
+
+					<h3>Specific things to know with fillers and parallel play</h3>
+					<p>
+					 	Also, in order to let the final sequential item disappear a filler needs to be added, like so: 
+					</p>
+					
+					<pre class="brush: html;">
+						&lt;ximpel&gt;
+							&lt;playlist&gt;
+							&lt;subject&gt;
+								&lt;sequence&gt;
+									&lt;some_media_item duration="30" /&gt;
+									&lt;!-- without the following filler, the previous media item will not be removed from screen --&gt;
+									&lt;filler duration="1" /&gt; 
+									&lt;parallel&gt;
+										...
+									&lt;/parallel&gt;
+								&lt;/sequence&gt;
+							&lt;/subject&gt;
+							&lt;/playlist&gt;
+						&lt;/ximpel&gt;</pre>
+					
+					<p>
+						This is not an optimal solution. Preferably XIMPEL would work in a way that this filler would not be needed. For now, this is the workaround.
+					</p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

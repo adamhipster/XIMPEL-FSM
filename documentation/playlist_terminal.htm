@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<title>XIMPEL - Documentation</title>
+
+		<!-- include syntax highlighter -->
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+		<script type="text/javascript" src="syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+		<link href="syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+		<link type="text/css" rel="stylesheet" href="syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+		<!-- include jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<!-- include jquery ui -->
+		<link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css" />
+		<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		
+		<!-- include scripts/css for this documentation page. -->
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/main.js"></script>
+		<script type="text/javascript">
+			//
+			var activeSection=4;
+		</script>
+
+	</head>
+	<body>
+		<div id="container">
+			<script src="scripts/header.js"></script>
+			<script src="scripts/navigation.js"></script>
+
+			<div id="mainContentContainer">
+				<div id="mainContent">
+					<h2>Syntax - Terminal mediatype</h2>
+					<p>
+						<div class="ui-widget">	
+							<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+								<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+								This is an advanced media type. It allows for command-line tutorials. Knowledge about clients, servers and a tiny bit of the code of the media type <code>terminal.js</code> is required. The code you need to know is regarding <code>terminal.js</code> is explained on this page.
+							</div>
+						</div>
+					</p>
+
+					<h4>playlist.xml</h4>
+					<pre class="brush: html;">
+						&lt;ximpel&gt;
+							&lt;playlist&gt;
+							    &lt;subject&gt;
+							        &lt;media&gt;
+										&lt;terminal /&gt;
+							        &lt;/media&gt;
+							    &lt;/subject&gt;
+							&lt;/playlist&gt;
+						&lt;/ximpel&gt;</pre>
+					
+
+
+
+
+					<h3>The duration attribute</h3>
+					<p>
+						If you want a terminal to last for a certain amount of time, then the <code>duration</code> attribute needs to be given like so:
+					</p>
+
+					<pre class="brush: html;">
+						&lt;terminal duration="35" /&gt;</pre>
+					
+					<p>This specific terminal will show up for 35 seconds on the screen.</p>
+
+					<h3>Server setup of the terminal media type</h3>
+					<p>
+						The terminal media type requires a server. The server will handle the terminal commands and execute them remotely. This server could be any type of code able to handle these type of requests. A prototype server has been made at <a href="https://github.com/melvinroest/ximpel-terminal-media-type-server" target="_blank">the following Github repository (of Melvin Roest)</a>.
+						Of this particular server the standard port is 8080 and is called with <code>node server.js &lt;port_number&gt;</code>.
+
+						<div class="ui-widget">	
+							<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+								<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+								If you have a custom port number on the NodeJs server (or your own server), then you need to change the port number in the media type <code>terminal.js</code>. This is found on the line <code>socket = io('http://localhost:8080');</code>. Change <code>8080</code> to any port number you desire.
+							</div>
+						</div>
+					</p>
+
+					<h3>Positioning</h3>
+
+					<p>It is possible to position the terminal media type like any other media type with <code>x, y, width</code> and <code>height</code>.</p>
+					
+					
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
